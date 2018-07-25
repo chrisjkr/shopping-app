@@ -1,7 +1,34 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { Component } from 'react'
+import { SafeAreaView } from 'react-native'
+import { Provider } from 'mobx-react'
 
-export default class App extends React.Component {
+import Screens from './src/screens'
+import RootStore from './src/stores/RootStore'
+
+const testItem = {
+  name: 'Tomato',
+  lastQuantity: 1,
+  createdAt: new Date(),
+}
+
+const rootStore = new RootStore({
+  lists: [
+    {
+      name: 'My shopping list',
+      items: [
+        {
+          item: testItem,
+          quantity: 1,
+          addedAt: new Date(),
+        }
+      ],
+      createdAt: new Date(),
+      isArchived: false,
+    }
+  ]
+})
+
+export default class App extends Component {
 
   async componentWillMount() {
     await Expo.Font.loadAsync({
@@ -12,20 +39,9 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-        <Text>Changes you make will automatically reload.</Text>
-        <Text>Shake your phone to open the developer menu.</Text>
-      </View>
-    );
+      <Provider store={rootStore}>
+        <Screens />
+      </Provider>
+    )
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
