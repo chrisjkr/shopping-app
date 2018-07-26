@@ -1,9 +1,12 @@
 // @flow
 
+import { AsyncStorage } from 'react-native'
 import { observable, action, extendObservable } from 'mobx'
+import { create, persist } from 'mobx-persist'
 import type { BoundList, List } from '../types/List'
 import type { BoundListItem, ListItem } from '../types/ListItem'
 import type { Item } from '../types/Item'
+import uuid from 'uuid/v4'
 
 type DefaultState = {
   items: Item[],
@@ -11,20 +14,20 @@ type DefaultState = {
   listItems: ListItem[],
 }
 
-export default class RootStore {
+export class RootStore {
   static defaultState: DefaultState = {
     items: [],
     lists: [],
     listItems: [],
   }
 
-  @observable items: Item[]
+  @persist('list') @observable items: Item[]
 
-  @observable lists: List[]
+  @persist('list') @observable lists: List[]
 
-  @observable listItems: ListItem[]
+  @persist('list') @observable listItems: ListItem[]
 
-  constructor(initialState: DefaultState) {
+  constructor(initialState?: DefaultState) {
     extendObservable(this, { ...RootStore.defaultState, ...initialState })
   }
 
@@ -93,3 +96,68 @@ export default class RootStore {
     return { ...listItem, item: this.getItem(listItem.itemId)}
   }
 }
+
+function hydrateStore(keys: string[], store) {
+  keys.forEach((key) => {
+    hydrate(key, store).then(() => console.log(`${key} hydrated`))
+  })
+}
+
+const hydrate = create({
+  storage: AsyncStorage,
+})
+
+// const testItems = [
+//   {
+//     id: uuid(),
+//     name: 'Tomato',
+//     lastQuantity: 1,
+//     createdAt: new Date(),
+//   },
+//   {
+//     id: uuid(),
+//     name: 'Cheese',
+//     lastQuantity: 3,
+//     createdAt: new Date(),
+//   }
+// ]
+//
+// const testLists = [
+//   {
+//     id: uuid(),
+//     name: 'My cool shopping list',
+//     createdAt: new Date(),
+//     isArchived: false,
+//   },
+// ]
+//
+// const testListItems = [
+//   {
+//     id: uuid(),
+//     itemId: testItems[0].id,
+//     listId: testLists[0].id,
+//     isChecked: true,
+//     quantity: 1,
+//     addedAt: new Date(),
+//   },
+//   {
+//     id: uuid(),
+//     itemId: testItems[1].id,
+//     listId: testLists[0].id,
+//     isChecked: false,
+//     quantity: 3,
+//     addedAt: new Date(),
+//   }
+// ]
+//
+// console.log(AsyncStorage.getAllKeys().then((keys) => console.log(keys)))
+// const testData = {
+//   items: testItems,
+//   lists: testLists,
+//   listItems: testListItems,
+// }
+
+const rootStore = new RootStore()
+export default rootStore
+
+hydrateStore(['items', 'lists', 'listItems'], rootStore)
