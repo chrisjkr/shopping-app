@@ -1,7 +1,7 @@
 import React from 'react'
 import { Platform } from 'react-native'
 import { createBottomTabNavigator, createStackNavigator }  from 'react-navigation'
-import { Ionicons } from '@expo/vector-icons';
+import Icon from '../components/Icon'
 
 import colours from '../constants/colours'
 
@@ -24,9 +24,8 @@ const ArchivedListsStack = createStackNavigator({
 function tabIcon (iconName) {
   return function ({ focused, tintColor }) {
 
-    const platformIconName = `${Platform.OS === 'ios' ? 'ios' : 'md'}-${iconName}`;
-    return <Ionicons
-      name={platformIconName}
+    return <Icon
+      name={iconName}
       size={32}
       color={focused ? tintColor : 'black'}
     />
