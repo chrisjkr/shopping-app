@@ -3,23 +3,24 @@
 import React from 'react'
 import { observer } from 'mobx-react'
 import { TouchableOpacity } from 'react-native'
-import { Text, ListItem as ListItemContainer } from 'native-base'
+import { Text, Card, CardItem, Body } from 'native-base'
 
 import styles from './styles'
 import type { List } from '../../types/List'
 
-const ListItem = observer(({ list }: { list: List }) => {
-  const onPress = () => {
-    console.log('navigate to list')
-  }
+type Props = {
+  list: List,
+  onPress: () => void,
+}
 
+function ListItem ({ list, onPress }: Props) {
   return (
-    <TouchableOpacity onPress={onPress()}>
-      <ListItemContainer style={styles.container}>
+    <TouchableOpacity onPress={onPress}>
+      <Card style={styles.card}>
         <Text>{list.name}</Text>
-      </ListItemContainer>
+      </Card>
     </TouchableOpacity>
   )
-})
+}
 
 export default ListItem
