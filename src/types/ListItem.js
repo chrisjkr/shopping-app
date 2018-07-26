@@ -1,9 +1,16 @@
 // @flow
 
-import type { Item } from "./Item";
+import type { Item } from './Item'
 
 export type ListItem = {
-  item: Item,
+  id: string,
+  itemId: string,
+  listId: string,
+  isChecked: boolean,
   quantity: number,
   addedAt: Date,
+}
+
+export type BoundListItem =  ListItem & {
+  item: Item,
 }

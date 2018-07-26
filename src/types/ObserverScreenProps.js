@@ -1,6 +1,8 @@
 import RootStore from "../stores/RootStore";
 import type {BaseScreenProps} from "./BaseScreenProps";
 
-export type ObserverScreenProps = BaseScreenProps & {
+type BaseProps = {
   store: RootStore,
 }
+
+export type ObserverScreenProps = BaseScreenProps & BaseProps

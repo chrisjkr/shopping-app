@@ -5,14 +5,20 @@ import { inject, observer } from 'mobx-react'
 import { Container, Content } from 'native-base'
 import BaseScreenComponent from '../../components/BaseScreenComponent'
 import ListItem from '../../components/ListItem'
+import type { List } from '../../types/List'
 
 @inject('store')
+@observer
 export default class ActiveLists extends BaseScreenComponent<void> {
-  onCardPress = () => {
-    this.props.navigation.navigate('ShoppingList')
+  static navigationOptions = {
+    title: 'Active lists'
   }
 
-  renderList = () => {
+  onCardPress = (list: List) => {
+    this.props.navigation.navigate('ShoppingList', { list })
+  }
+
+  renderLists = (): ListItem[] => {
     return this.store.getActiveLists().map((list, index) => (
       <ListItem list={list} onPress={this.onCardPress} key={index}/>
     ))
@@ -22,7 +28,7 @@ export default class ActiveLists extends BaseScreenComponent<void> {
     return (
       <Container>
         <Content padder>
-          {this.renderList()}
+          {this.renderLists()}
         </Content>
       </Container>
     )
