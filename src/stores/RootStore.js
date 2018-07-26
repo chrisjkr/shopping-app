@@ -57,7 +57,7 @@ export class RootStore {
     return this._bindItemsToLists(archivedLists)
   }
 
-  @action getList(id: string): ?List {
+  @action getList(id: string): List {
     return this.lists.filter((list) => list.id === id)[0] || null
   }
 
@@ -77,11 +77,47 @@ export class RootStore {
     return this.items.filter((item) => item.id === id)[0]
   }
 
+  @action getItemByName(name: string): ?Item {
+    return this.items.filter((item) => item.name === name)[0] || null
+  }
+
   @action toggleCheckListItem(id: string): boolean {
     const listItem = this.getListItem(id)
     if (listItem == null) return false
     listItem.isChecked = !listItem.isChecked
     return true
+  }
+
+  @action addItem(name: string, lastQuantity: number): Item {
+    const item: Item = {
+      id: uuid(),
+      name,
+      lastQuantity,
+      createdAt: new Date(),
+    }
+
+    this.items.push(item)
+    return item
+  }
+
+  @action addListItem(name: string, quantity: number, listId: string): ListItem {
+    let item = this.getItem(name)
+    if (item == null) {
+      item = this.addItem(name, quantity)
+    }
+
+    const listItem: ListItem = {
+      id: uuid(),
+      itemId: item.id,
+      listId,
+      isChecked: false,
+      quantity,
+      addedAt: new Date(),
+    }
+
+    this.listItems.push(listItem)
+
+    return listItem
   }
 
   _bindItemsToList(list: List): BoundList {

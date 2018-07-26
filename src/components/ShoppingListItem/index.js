@@ -3,10 +3,10 @@
 import React from 'react'
 import { inject, observer } from 'mobx-react'
 import { TouchableOpacity } from 'react-native'
-import { Card, Text, Left, Right, Radio } from 'native-base'
+import { Card, Text, Right, Radio } from 'native-base'
 import type { ListItem } from '../../types/ListItem'
 import styles from './styles'
-import RootStore from '../../stores/RootStore'
+import { RootStore } from '../../stores/RootStore'
 
 type Props = {
   listItem: ListItem,
