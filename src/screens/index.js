@@ -10,14 +10,6 @@ import ShoppingListScreen from './ShoppingList'
 import NewItemScreen from './NewItem'
 import NewListScreen from './NewList'
 
-// const ShoppingListStack = createStackNavigator({
-//   ShoppingList: ShoppingListScreen,
-//   NewItem: NewItemScreen,
-// }, {
-//   mode: 'modal',
-//   headerMode: 'none',
-// })
-
 const ActiveListsStack = createStackNavigator({
   ActiveLists: ActiveListsScreen,
   NewList: NewListScreen,
