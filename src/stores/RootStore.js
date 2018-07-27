@@ -31,53 +31,53 @@ export class RootStore {
     extendObservable(this, { ...RootStore.defaultState, ...initialState })
   }
 
-  @action getLists(): List[] {
+  getLists(): List[] {
     return this.lists
   }
 
-  @action getLists(isArchived: boolean): List[] {
+  getLists(isArchived: boolean): List[] {
     return this.lists.filter(list => list.isArchived === isArchived)
   }
 
-  @action getActiveLists(): List[] {
+  getActiveLists(): List[] {
     return this.getLists(false)
   }
 
-  @action getArchivedLists(): List[] {
+  getArchivedLists(): List[] {
     return this.getLists(true)
   }
 
-  @action getBoundActiveLists(): BoundList[] {
+  getBoundActiveLists(): BoundList[] {
     const activeLists = this.getLists(false)
     return this._bindItemsToLists(activeLists)
   }
 
-  @action getBoundArchivedLists(): BoundList[] {
+  getBoundArchivedLists(): BoundList[] {
     const archivedLists = this.getLists(true)
     return this._bindItemsToLists(archivedLists)
   }
 
-  @action getList(id: string): List {
+  getList(id: string): List {
     return this.lists.filter((list) => list.id === id)[0] || null
   }
 
-  @action getListItems(listId: string): ListItem[] {
+  getListItems(listId: string): ListItem[] {
     return this.listItems.filter((listItem) => listItem.listId === listId)
   }
 
-  @action getBoundListItems(listId: string): BoundListItem[] {
+  getBoundListItems(listId: string): BoundListItem[] {
     return this.getListItems(listId).map(this._bindItemToListItem)
   }
 
-  @action getListItem(id: string): ?ListItem {
+  getListItem(id: string): ?ListItem {
     return this.listItems.filter((listItem) => listItem.id === id)[0] || null
   }
 
-  @action getItem(id: string): Item {
+  getItem(id: string): Item {
     return this.items.filter((item) => item.id === id)[0]
   }
 
-  @action getItemByName(name: string): ?Item {
+  getItemByName(name: string): ?Item {
     return this.items.filter((item) => item.name === name)[0] || null
   }
 

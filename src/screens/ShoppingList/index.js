@@ -2,6 +2,7 @@
 
 import React from 'react'
 import { Header } from 'react-navigation'
+import { computed } from 'mobx'
 import { inject, observer } from 'mobx-react'
 import { Container, Content } from 'native-base'
 import BaseScreenComponent from '../../components/BaseScreenComponent'
@@ -26,11 +27,11 @@ export default class ShoppingList extends BaseScreenComponent<void, void> {
     }
   }
 
-  get list(): List {
+  @computed get list(): List {
     return this.store.getList(this.props.navigation.state.params.list.id)
   }
 
-  get items(): ListItem[] {
+  @computed get items(): ListItem[] {
     return this.store.getListItems(this.list.id)
   }
 
