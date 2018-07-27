@@ -9,9 +9,12 @@ import {
   Input,
   Button,
 } from 'native-base'
-import BaseScreenComponent from '../../components/BaseScreenComponent'
+import { Dimensions } from 'react-native'
 import styles from './styles'
 import ToastService from '../../services/ToastService'
+import FormScreenComponent from '../../components/FormScreenComponent'
+
+const { height } = Dimensions.get('window')
 
 type State = {
   itemName: string,
@@ -20,14 +23,19 @@ type State = {
 
 @inject('store')
 @observer
-export default class NewItem extends BaseScreenComponent<void, State> {
+export default class NewItem extends FormScreenComponent<void, State> {
   static navigationOptions = {
     title: 'New item',
   }
 
   state: State = {
     itemName: '',
-    quantity: '',
+    quantity: '1',
+  }
+
+  toastStyle = {
+    marginBottom: height * 0.15,
+    width: '98%',
   }
 
   get listId(): string {
@@ -36,10 +44,22 @@ export default class NewItem extends BaseScreenComponent<void, State> {
 
   onAddPress = () => {
     const { itemName, quantity } = this.state
-    if (itemName.length === 0 && quantity.length === 0) {
-      // TODO show alert/toast
+    if (itemName.length === 0) {
+      ToastService.show({ text: 'Please name your item', style: this.toastStyle })
       return
     }
+    console.log(quantity.length === 0)
+    if (quantity.length === 0) {
+      ToastService.show({ text: 'Please insert item quantity', style: this.toastStyle })
+      return
+    }
+
+    if (isNaN(quantity)) {
+      ToastService.show({ text: 'Invalid quantity format', style: this.toastStyle })
+      this.setState({ quantity: '1' })
+      return
+    }
+
     this.store.addListItem(
       itemName,
       Number(quantity),
@@ -47,12 +67,6 @@ export default class NewItem extends BaseScreenComponent<void, State> {
     )
     ToastService.show({ text: 'Item added!' })
     this.navigation.goBack()
-  }
-
-  handleInputChange = (key: string) => {
-    return (value: any) => {
-      this.setState({ [key]: value })
-    }
   }
 
   render() {
@@ -65,8 +79,8 @@ export default class NewItem extends BaseScreenComponent<void, State> {
             onChangeText={this.handleInputChange('itemName')}
           />
           <Input
-            placeholder="Quantity"
-            keyboardType="numeric"
+            placeholder='Quantity'
+            keyboardType='numeric'
             value={this.state.quantity}
             onChangeText={this.handleInputChange('quantity')}
           />
