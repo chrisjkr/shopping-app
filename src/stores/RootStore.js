@@ -100,10 +100,10 @@ export class RootStore {
     return item
   }
 
-  @action updateItem(id: string, { lastQuantity }: { lastQuantity: number }): boolean {
+  @action updateItem(id: string, { lastQuantity }: { lastQuantity?: number }): boolean {
     for (let i = 0, len = this.items.length; i < len; ++i) {
       if (this.items[i].id === id) {
-        this.items[i].lastQuantity = lastQuantity
+        if (lastQuantity != null) this.items[i].lastQuantity = lastQuantity
         return true
       }
     }
@@ -143,6 +143,18 @@ export class RootStore {
     this.lists.push(list)
 
     return list
+  }
+
+  @action updateList(id: string, { name, isArchived }: { name?: string, isArchived?: boolean}): boolean {
+    for (let i = 0, len = this.lists.length; i < len; ++i) {
+      if (this.lists[i].id === id) {
+        if (name != null) this.lists[i].name = name
+        if (isArchived != null) this.lists[i].isArchived = isArchived
+        return true
+      }
+    }
+
+    return false
   }
 
   _bindItemsToList(list: List): BoundList {

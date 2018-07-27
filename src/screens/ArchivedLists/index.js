@@ -1,26 +1,48 @@
 // @flow
 
-import React, { Component } from 'react'
-import {
-  Container,
-  Text,
-} from 'native-base'
+import React from 'react'
+import { inject, observer } from 'mobx-react'
+import { Container, Content } from 'native-base'
+import BaseScreenComponent from '../../components/BaseScreenComponent'
+import ListItem from '../../components/ListItem'
+import ToastService from '../../services/ToastService'
 
+@inject('store')
+@observer
+export default class ActiveLists extends BaseScreenComponent<void, void> {
+  static navigationOptions = {
+    title: 'Archived lists',
+  }
 
-type Props = {
+  toastStyle = {
+    width: '98%',
+  }
 
-}
+  unarchiveList = (listId: string) => {
+    this.store.updateList(listId, { isArchived: false })
+  }
 
-type State = {
+  showArchivedToast = () => {
+    ToastService.show({ text: 'Unarchive a list to edit it', style: this.toastStyle })
+  }
 
-}
-
-export default class ArchivedLists extends Component<Props, State> {
+  renderList = (): ListItem[] => {
+    return this.store
+      .getArchivedLists()
+      .map(list => (
+        <ListItem
+          list={list}
+          key={list.id}
+          onPress={this.showArchivedToast}
+          onUnarchivePress={this.unarchiveList}
+        />
+      ))
+  }
 
   render() {
     return (
       <Container>
-        <Text>Archived lists</Text>
+        <Content padder>{this.renderList()}</Content>
       </Container>
     )
   }
