@@ -29,10 +29,14 @@ function ShoppingListItem({ listItem, store, onRemovePress }: Props) {
   return (
     <TouchableOpacity onPress={toggleItemCheck}>
       <Card style={cardStyles}>
-        <Text style={styles.name}>{item.name}</Text>
+        <Text style={styles.name} numberOfLines={1}>
+          {item.name}
+        </Text>
         <View>
           <Badge info style={styles.quantityBadge}>
-            <Text numberOfLines={1} style={styles.quantity}>{listItem.quantity}</Text>
+            <Text numberOfLines={1} style={styles.quantity}>
+              {listItem.quantity}
+            </Text>
           </Badge>
         </View>
         {onRemovePress ? (

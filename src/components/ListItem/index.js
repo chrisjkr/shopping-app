@@ -52,7 +52,7 @@ export default class ListItem extends BaseScreenComponent<Props, State> {
       <TouchableOpacity onPress={onPress ? () => onPress(list) : undefined}>
         <Card style={styles.card}>
           <View style={styles.listInfo}>
-            <Text style={styles.listName}>{list.name}</Text>
+            <Text style={styles.listName} numberOfLines={1}>{list.name}</Text>
             <Text style={styles.createdTime}>{this.state.createdTimeText}</Text>
           </View>
           {onArchivePress ? (
