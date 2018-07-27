@@ -5,6 +5,10 @@ export default StyleSheet.create({
     paddingTop: 20,
   },
 
+  item: {
+    marginVertical: 20,
+  },
+
   addButton: {
     position: 'absolute',
     bottom: 0,

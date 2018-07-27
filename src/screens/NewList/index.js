@@ -8,9 +8,9 @@ import {
   Text,
   Input,
   Button,
-  Toast,
+  Item,
+  Label,
 } from 'native-base'
-import BaseScreenComponent from '../../components/BaseScreenComponent'
 import styles from './styles'
 import FormScreenComponent from '../../components/FormScreenComponent'
 import ToastService from '../../services/ToastService'
@@ -41,11 +41,13 @@ export default class NewList extends FormScreenComponent<void, State> {
     return (
       <Container>
         <Content padder style={styles.content}>
-          <Input
-            placeholder="New list"
-            value={this.state.listName}
-            onChangeText={this.handleInputChange('listName')}
-          />
+          <Item floatingLabel style={styles.item}>
+            <Label>New list</Label>
+            <Input
+              value={this.state.listName}
+              onChangeText={this.handleInputChange('listName')}
+            />
+          </Item>
         </Content>
         <Button full style={styles.addButton} onPress={this.onAddPress}>
           <Text>Add</Text>

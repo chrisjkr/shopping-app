@@ -8,6 +8,8 @@ import {
   Text,
   Input,
   Button,
+  Item,
+  Label,
 } from 'native-base'
 import { Dimensions } from 'react-native'
 import styles from './styles'
@@ -73,17 +75,21 @@ export default class NewItem extends FormScreenComponent<void, State> {
     return (
       <Container>
         <Content padder style={styles.content}>
-          <Input
-            placeholder="New item"
-            value={this.state.itemName}
-            onChangeText={this.handleInputChange('itemName')}
-          />
-          <Input
-            placeholder='Quantity'
-            keyboardType='numeric'
-            value={this.state.quantity}
-            onChangeText={this.handleInputChange('quantity')}
-          />
+          <Item floatingLabel style={styles.item}>
+            <Label>New item</Label>
+            <Input
+              value={this.state.itemName}
+              onChangeText={this.handleInputChange('itemName')}
+            />
+          </Item>
+          <Item floatingLabel style={styles.item}>
+            <Label>Quantity</Label>
+            <Input
+              keyboardType='numeric'
+              value={this.state.quantity}
+              onChangeText={this.handleInputChange('quantity')}
+            />
+          </Item>
         </Content>
         <Button full style={styles.addButton} onPress={this.onAddPress}>
           <Text>Add</Text>
