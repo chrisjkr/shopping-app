@@ -32,11 +32,26 @@ export class RootStore {
   }
 
   getLists(): List[] {
-    return this.lists
+    return this.lists.sort((l1, l2) => l2.createdAt - l1.createdAt)
   }
 
   getLists(isArchived: boolean): List[] {
-    return this.lists.filter(list => list.isArchived === isArchived)
+    return this.getSortedLists(true)
+      .filter(list => list.isArchived === isArchived)
+  }
+
+  getSortedLists(descending: boolean): List[] {
+    let sortFunction
+    if (descending) {
+      sortFunction = (l1: List, l2: List) => (
+        new Date(l2.createdAt) - new Date(l1.createdAt)
+      )
+    } else {
+      sortFunction = (l1: List, l2: List) => (
+        new Date(l1.createdAt) - new Date(l2.createdAt)
+      )
+    }
+    return this.lists.slice().sort(sortFunction)
   }
 
   getActiveLists(): List[] {
