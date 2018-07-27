@@ -9,7 +9,20 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
 
+  listInfo: {
+    width: '70%',
+  },
+
   listName: {
-    width: '70%'
+    width: '100%',
+  },
+
+  createdTime: {
+    fontSize: 10,
+    color: 'gray',
+  },
+
+  icon: {
+    paddingLeft: 20,
   }
 })

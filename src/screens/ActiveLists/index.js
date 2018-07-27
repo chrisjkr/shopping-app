@@ -1,6 +1,7 @@
 // @flow
 
 import React from 'react'
+import { Alert } from 'react-native'
 import { inject, observer } from 'mobx-react'
 import { Container, Content } from 'native-base'
 import BaseScreenComponent from '../../components/BaseScreenComponent'
@@ -12,7 +13,7 @@ import AddButton from '../../components/AddButton'
 @observer
 export default class ActiveLists extends BaseScreenComponent<void, void> {
   static navigationOptions = {
-    title: 'Active lists'
+    title: 'Active lists',
   }
 
   onCardPress = (list: List) => {
@@ -23,11 +24,31 @@ export default class ActiveLists extends BaseScreenComponent<void, void> {
     this.store.updateList(listId, { isArchived: true })
   }
 
+  removeList = (listId: string) => {
+    const yesButton = {
+      text: 'Yes',
+      onPress: () => this.store.removeList(listId),
+    }
+    const noButton = {
+      text: 'No',
+      onPress: () => {},
+    }
+
+    Alert.alert(
+      'Are you sure you want to remove a list?',
+      '',
+      [
+        yesButton,
+        noButton,
+      ],
+    )
+  }
+
   onAddButtonPress = () => {
     this.navigation.navigate('NewList')
   }
 
-  renderLists = (): ListItem[] => {
+  renderLists = () => {
     return this.store
       .getActiveLists()
       .map(list => (
@@ -35,6 +56,7 @@ export default class ActiveLists extends BaseScreenComponent<void, void> {
           list={list}
           onPress={this.onCardPress}
           onArchivePress={this.archiveList}
+          onRemovePress={this.removeList}
           key={list.id}
         />
       ))

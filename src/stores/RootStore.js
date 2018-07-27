@@ -147,6 +147,11 @@ export class RootStore {
     return listItem
   }
 
+  @action removeListItems(listId: string) {
+    this.listItems = this.listItems
+      .filter((listItem) => listItem.listId !== listId)
+  }
+
   @action addList(name: string): List {
     const list: List = {
       id: uuid(),
@@ -170,6 +175,11 @@ export class RootStore {
     }
 
     return false
+  }
+
+  @action removeList(id: string) {
+    this.removeListItems(id)
+    this.lists = this.lists.filter((list) => list.id !== id)
   }
 
   _bindItemsToList(list: List): BoundList {
