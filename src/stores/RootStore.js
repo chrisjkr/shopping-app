@@ -147,6 +147,11 @@ export class RootStore {
     return listItem
   }
 
+  @action removeListItem(listItemId: string) {
+    this.listItems = this.listItems
+      .filter((listItem) => listItem.id !== listItemId)
+  }
+
   @action removeListItems(listId: string) {
     this.listItems = this.listItems
       .filter((listItem) => listItem.listId !== listId)

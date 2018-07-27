@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native'
 
 export default StyleSheet.create({
   card: {
-    height: 55,
+    height: 60,
     flexDirection: 'row',
     padding: 15,
     alignItems: 'center',
@@ -11,4 +11,20 @@ export default StyleSheet.create({
   checkedCard: {
     opacity: 0.35,
   },
+
+  name: {
+    width: '60%',
+  },
+
+  quantityBadge: {
+    marginLeft: 20,
+  },
+
+  quantity: {
+    width: 35,
+  },
+
+  icon: {
+    marginLeft: 20,
+  }
 })

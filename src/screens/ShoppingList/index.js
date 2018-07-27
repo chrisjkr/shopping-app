@@ -1,7 +1,6 @@
 // @flow
 
 import React from 'react'
-import { Header } from 'react-navigation'
 import { computed } from 'mobx'
 import { inject, observer } from 'mobx-react'
 import { Container, Content } from 'native-base'
@@ -14,11 +13,7 @@ import AddButton from '../../components/AddButton'
 @inject('store')
 @observer
 export default class ShoppingList extends BaseScreenComponent<void, void> {
-  static navigationOptions = ({
-    navigation,
-  }: {
-    navigation: Object,
-  }) => {
+  static navigationOptions = ({ navigation }: { navigation: Object }) => {
     const { params } = navigation.state
     const list: List = params.list
 
@@ -27,11 +22,13 @@ export default class ShoppingList extends BaseScreenComponent<void, void> {
     }
   }
 
-  @computed get list(): List {
+  @computed
+  get list(): List {
     return this.store.getList(this.props.navigation.state.params.list.id)
   }
 
-  @computed get items(): ListItem[] {
+  @computed
+  get items(): ListItem[] {
     return this.store.getListItems(this.list.id)
   }
 
@@ -39,9 +36,17 @@ export default class ShoppingList extends BaseScreenComponent<void, void> {
     this.navigation.navigate('NewItem', { listId: this.list.id })
   }
 
+  removeListItem = (listItemId: string) => {
+    this.store.removeListItem(listItemId)
+  }
+
   renderItems = (): ShoppingListItem[] => {
-    return this.items.map((listItem) => (
-      <ShoppingListItem listItem={listItem} key={listItem.id} />
+    return this.items.map(listItem => (
+      <ShoppingListItem
+        listItem={listItem}
+        key={listItem.id}
+        onRemovePress={this.removeListItem}
+      />
     ))
   }
 
