@@ -64,7 +64,6 @@ export default class NewItem extends FormScreenComponent<void, State> {
     if (value.length > 2) {
       this.showQuantityMessage()
     } else {
-      console.log('hide')
       this.hideQuantityMessage()
     }
   }
@@ -78,7 +77,7 @@ export default class NewItem extends FormScreenComponent<void, State> {
       })
       return
     }
-    console.log(quantity.length === 0)
+
     if (quantity.length === 0) {
       ToastService.show({
         text: 'Please insert item quantity',
