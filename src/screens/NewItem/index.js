@@ -8,11 +8,10 @@ import {
   Text,
   Input,
   Button,
-  Item,
-  Label,
 } from 'native-base'
 import BaseScreenComponent from '../../components/BaseScreenComponent'
 import styles from './styles'
+import ToastService from '../../services/ToastService'
 
 type State = {
   itemName: string,
@@ -46,6 +45,7 @@ export default class NewItem extends BaseScreenComponent<void, State> {
       Number(quantity),
       this.listId,
     )
+    ToastService.show({ text: 'Item added!' })
     this.navigation.goBack()
   }
 

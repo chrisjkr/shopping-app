@@ -100,6 +100,17 @@ export class RootStore {
     return item
   }
 
+  @action updateItem(id: string, { lastQuantity }: { lastQuantity: number }): boolean {
+    for (let i = 0, len = this.items.length; i < len; ++i) {
+      if (this.items[i].id === id) {
+        this.items[i].lastQuantity = lastQuantity
+        return true
+      }
+    }
+
+    return false
+  }
+
   @action addListItem(name: string, quantity: number, listId: string): ListItem {
     let item = this.getItem(name)
     if (item == null) {
@@ -116,8 +127,22 @@ export class RootStore {
     }
 
     this.listItems.push(listItem)
+    this.updateItem(item.id, { lastQuantity: quantity })
 
     return listItem
+  }
+
+  @action addList(name: string): List {
+    const list: List = {
+      id: uuid(),
+      name,
+      createdAt: new Date(),
+      isArchived: false,
+    }
+
+    this.lists.push(list)
+
+    return list
   }
 
   _bindItemsToList(list: List): BoundList {

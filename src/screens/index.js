@@ -8,6 +8,7 @@ import ActiveListsScreen from './ActiveLists'
 import ArchivedListsScreen from './ArchivedLists'
 import ShoppingListScreen from './ShoppingList'
 import NewItemScreen from './NewItem'
+import NewListScreen from './NewList'
 
 // const ShoppingListStack = createStackNavigator({
 //   ShoppingList: ShoppingListScreen,
@@ -19,6 +20,7 @@ import NewItemScreen from './NewItem'
 
 const ActiveListsStack = createStackNavigator({
   ActiveLists: ActiveListsScreen,
+  NewList: NewListScreen,
   ShoppingList: ShoppingListScreen,
   NewItem: NewItemScreen,
 }, {

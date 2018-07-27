@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Provider } from 'mobx-react'
+import { Root } from 'native-base'
 
 import Screens from './src/screens'
 import rootStore from './src/stores/RootStore'
@@ -16,7 +17,9 @@ export default class App extends Component {
   render() {
     return (
       <Provider store={rootStore}>
-        <Screens />
+        <Root>
+          <Screens />
+        </Root>
       </Provider>
     )
   }
