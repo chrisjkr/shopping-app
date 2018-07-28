@@ -72,12 +72,26 @@ export class RootStore {
     return this.lists.filter((list) => list.id === id)[0] || null
   }
 
+  getSortedListItems(descending: boolean): ListItem[] {
+    let sortFunction
+    if (descending) {
+      sortFunction = (i1: ListItem, i2: ListItem) => (
+        new Date(i2.addedAt) - new Date(i1.addedAt)
+      )
+    } else {
+      sortFunction = (i1: ListItem, i2: ListItem) => (
+        new Date(i1.addedAt) - new Date(i2.addedAt)
+      )
+    }
+    return this.listItems.slice().sort(sortFunction)
+  }
+
   getAllListItems(): ListItem[] {
-    return this.listItems
+    return this.getSortedListItems(true)
   }
 
   getListItems(listId: string): ListItem[] {
-    return this.listItems.filter((listItem) => listItem.listId === listId)
+    return this.getSortedListItems(true).filter((listItem) => listItem.listId === listId)
   }
 
   getBoundListItems(listId: string): BoundListItem[] {
@@ -86,6 +100,14 @@ export class RootStore {
 
   getListItem(id: string): ?ListItem {
     return this.listItems.filter((listItem) => listItem.id === id)[0] || null
+  }
+
+  getListItemByName(listId: string, name: string): ?ListItem {
+    const item = this.getItemByName(name)
+    if (item == null) return null
+    return this.listItems.filter(
+      (listItem) => listItem.listId === listId && listItem.itemId === item.id
+    )[0] || null
   }
 
   getItem(id: string): Item {
@@ -136,19 +158,37 @@ export class RootStore {
       item = this.addItem(name, quantity)
     }
 
-    const listItem: ListItem = {
-      id: uuid(),
-      itemId: item.id,
-      listId,
-      isChecked: false,
-      quantity,
-      addedAt: new Date(),
+    let listItem: ListItem = this.getListItemByName(listId, name)
+
+    if (listItem == null) {
+      listItem = {
+        id: uuid(),
+        itemId: item.id,
+        listId,
+        isChecked: false,
+        quantity,
+        addedAt: new Date(),
+      }
+      this.listItems.push(listItem)
+    } else {
+      quantity = listItem.quantity + quantity
+      this.updateListItem(listItem.id, { quantity })
     }
 
-    this.listItems.push(listItem)
     this.updateItem(item.id, { lastQuantity: quantity })
 
     return listItem
+  }
+
+  @action updateListItem(id: string, { quantity }: { quantity?: number }): boolean {
+    for (let i = 0, len = this.listItems.length; i < len; ++i) {
+      if (this.listItems[i].id === id) {
+        if (quantity != null) this.listItems[i].quantity = quantity
+        return true
+      }
+    }
+
+    return false
   }
 
   @action removeListItem(listItemId: string) {
