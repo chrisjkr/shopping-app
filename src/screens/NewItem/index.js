@@ -33,6 +33,7 @@ export default class NewItem extends FormScreenComponent<void, State> {
   state: State = {
     itemName: '',
     quantity: '1',
+    quantityInput: null,
   }
 
   toastStyle = {
@@ -107,6 +108,8 @@ export default class NewItem extends FormScreenComponent<void, State> {
           <Item floatingLabel style={styles.item}>
             <Label>New item</Label>
             <Input
+              autoFocus
+              returnKeyType="next"
               value={this.state.itemName}
               onChangeText={this.handleInputChange('itemName')}
             />

@@ -44,6 +44,7 @@ export default class NewList extends FormScreenComponent<void, State> {
           <Item floatingLabel style={styles.item}>
             <Label>New list</Label>
             <Input
+              autoFocus
               value={this.state.listName}
               onChangeText={this.handleInputChange('listName')}
             />
