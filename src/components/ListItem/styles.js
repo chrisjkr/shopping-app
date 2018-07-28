@@ -23,6 +23,6 @@ export default StyleSheet.create({
   },
 
   icon: {
-    paddingLeft: 20,
+    padding: 10,
   }
 })
