@@ -1,6 +1,7 @@
 // @flow
 
 import React from 'react'
+import { KeyboardAvoidingView } from 'react-native'
 import { inject, observer } from 'mobx-react'
 import {
   Container,
@@ -32,6 +33,15 @@ export default class NewList extends FormScreenComponent<void, State> {
 
   onAddPress = () => {
     const { listName } = this.state
+
+    if (listName.length === 0) {
+      ToastService.show({
+        text: 'Please name your list',
+        style: this.toastStyle,
+      })
+      return
+    }
+
     this.store.addList(listName)
     ToastService.show({ text: 'List added!' })
     this.navigation.goBack()
@@ -50,9 +60,11 @@ export default class NewList extends FormScreenComponent<void, State> {
             />
           </Item>
         </Content>
-        <Button full style={styles.addButton} onPress={this.onAddPress}>
-          <Text>Add</Text>
-        </Button>
+        <KeyboardAvoidingView>
+          <Button full style={styles.addButton} onPress={this.onAddPress}>
+            <Text>Add</Text>
+          </Button>
+        </KeyboardAvoidingView>
       </Container>
     )
   }

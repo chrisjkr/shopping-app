@@ -16,8 +16,6 @@ import styles from './styles'
 import ToastService from '../../services/ToastService'
 import FormScreenComponent from '../../components/FormScreenComponent'
 
-const { height } = Dimensions.get('window')
-
 type State = {
   itemName: string,
   quantity: string,
@@ -33,11 +31,6 @@ export default class NewItem extends FormScreenComponent<void, State> {
   state: State = {
     itemName: '',
     quantity: '1',
-  }
-
-  toastStyle = {
-    marginBottom: height * 0.15,
-    width: '98%',
   }
 
   quantityMessageOpacity: Animated.Value = new Animated.Value(0)
