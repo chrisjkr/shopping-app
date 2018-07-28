@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import 'core-js/es6/symbol'
+import 'core-js/fn/symbol/iterator'
 import { Provider } from 'mobx-react'
 import { Root } from 'native-base'
 
