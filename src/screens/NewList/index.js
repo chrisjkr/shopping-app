@@ -32,7 +32,7 @@ export default class NewList extends FormScreenComponent<void, State> {
   }
 
   onAddPress = () => {
-    const { listName } = this.state
+    const listName = this.state.listName.trim()
 
     if (listName.length === 0) {
       ToastService.show({

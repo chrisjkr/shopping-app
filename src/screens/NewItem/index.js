@@ -63,7 +63,9 @@ export default class NewItem extends FormScreenComponent<void, State> {
   }
 
   onAddPress = () => {
-    const { itemName, quantity } = this.state
+    const itemName = this.state.itemName.trim()
+    const quantity = this.state.quantity.trim()
+
     if (itemName.length === 0) {
       ToastService.show({
         text: 'Please name your item',
