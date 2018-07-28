@@ -66,4 +66,9 @@ describe('RootStore', () => {
 
     expect(item.name).toBe('Bread')
   })
+
+  it('should increment existing list item quantity', () => {
+    store.addListItem('Tomato', 1, list2.id)
+    expect(store.getListItemByName(list2.id, 'Tomato').quantity).toBe(3)
+  })
 })
