@@ -33,7 +33,6 @@ export default class NewItem extends FormScreenComponent<void, State> {
   state: State = {
     itemName: '',
     quantity: '1',
-    quantityInput: null,
   }
 
   toastStyle = {
@@ -42,6 +41,7 @@ export default class NewItem extends FormScreenComponent<void, State> {
   }
 
   quantityMessageOpacity: Animated.Value = new Animated.Value(0)
+  quantityInput: * = null
 
   get listId(): string {
     return this.navigation.state.params.listId
@@ -112,11 +112,13 @@ export default class NewItem extends FormScreenComponent<void, State> {
               returnKeyType="next"
               value={this.state.itemName}
               onChangeText={this.handleInputChange('itemName')}
+              onSubmitEditing={() => this.quantityInput._root.focus()}
             />
           </Item>
           <Item floatingLabel style={styles.item}>
             <Label>Quantity</Label>
             <Input
+              getRef={(input) => this.quantityInput = input}
               keyboardType="numeric"
               value={this.state.quantity}
               onChangeText={value => {
