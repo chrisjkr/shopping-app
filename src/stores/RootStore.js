@@ -214,56 +214,6 @@ const hydrate = create({
   storage: AsyncStorage,
 })
 
-// const testItems = [
-//   {
-//     id: uuid(),
-//     name: 'Tomato',
-//     lastQuantity: 1,
-//     createdAt: new Date(),
-//   },
-//   {
-//     id: uuid(),
-//     name: 'Cheese',
-//     lastQuantity: 3,
-//     createdAt: new Date(),
-//   }
-// ]
-//
-// const testLists = [
-//   {
-//     id: uuid(),
-//     name: 'My cool shopping list',
-//     createdAt: new Date(),
-//     isArchived: false,
-//   },
-// ]
-//
-// const testListItems = [
-//   {
-//     id: uuid(),
-//     itemId: testItems[0].id,
-//     listId: testLists[0].id,
-//     isChecked: true,
-//     quantity: 1,
-//     addedAt: new Date(),
-//   },
-//   {
-//     id: uuid(),
-//     itemId: testItems[1].id,
-//     listId: testLists[0].id,
-//     isChecked: false,
-//     quantity: 3,
-//     addedAt: new Date(),
-//   }
-// ]
-//
-// console.log(AsyncStorage.getAllKeys().then((keys) => console.log(keys)))
-// const testData = {
-//   items: testItems,
-//   lists: testLists,
-//   listItems: testListItems,
-// }
-
 const rootStore = new RootStore()
 export default rootStore
 
