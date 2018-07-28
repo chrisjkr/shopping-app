@@ -31,10 +31,6 @@ export class RootStore {
     extendObservable(this, { ...RootStore.defaultState, ...initialState })
   }
 
-  getLists(): List[] {
-    return this.lists.sort((l1, l2) => l2.createdAt - l1.createdAt)
-  }
-
   getLists(isArchived: boolean): List[] {
     return this.getSortedLists(true)
       .filter(list => list.isArchived === isArchived)
@@ -76,6 +72,10 @@ export class RootStore {
     return this.lists.filter((list) => list.id === id)[0] || null
   }
 
+  getAllListItems(): ListItem[] {
+    return this.listItems
+  }
+
   getListItems(listId: string): ListItem[] {
     return this.listItems.filter((listItem) => listItem.listId === listId)
   }
@@ -94,6 +94,10 @@ export class RootStore {
 
   getItemByName(name: string): ?Item {
     return this.items.filter((item) => item.name === name)[0] || null
+  }
+
+  getItems(): Item[] {
+    return this.items
   }
 
   @action toggleCheckListItem(id: string): boolean {
@@ -127,7 +131,7 @@ export class RootStore {
   }
 
   @action addListItem(name: string, quantity: number, listId: string): ListItem {
-    let item = this.getItem(name)
+    let item = this.getItemByName(name)
     if (item == null) {
       item = this.addItem(name, quantity)
     }
@@ -202,7 +206,7 @@ export class RootStore {
 
 function hydrateStore(keys: string[], store) {
   keys.forEach((key) => {
-    hydrate(key, store).then(() => console.log(`${key} hydrated`))
+    hydrate(key, store) // .then(() => console.log(`${key} hydrated`))
   })
 }
 
